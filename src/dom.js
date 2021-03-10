@@ -114,6 +114,48 @@ export default class Dom {
                     }
                 };
 
+                 /**
+                 * @method  setStyle()
+                 * @param {  }
+                 * @returns {  }
+                 * @description 
+                 */
+                p.setStyle = (o = {}) => {
+                    const props = this.util.isString(o) ? o.split(';') : this.util.isObject(o) ? ((input) => {
+                        console.log(Object.keys(input))
+                        return Object.keys(input).map((k) => {
+                            const v = input[k];
+                            if (this.util.isString(v) || this.utilisNumber(v)) {
+                            const x = this.util.normalize(k, v);
+                            console.log(x)
+                            return [x.key, x.value].join(':');
+                            }
+                            return null;
+                        }).filter((item) => {
+                            return !this.util.isNil(item);
+                        });
+                    })(o) : [];
+                
+                    console.log(props)
+            
+                    const currStyle = p.getAttribute('style') || '';
+                    const currStyleList = currStyle.split(';');
+                    const combinedPropes = [...currStyleList, ...props, ''];
+            
+                    const st = combinedPropes.filter((item) => {
+                        return item.trim().length > 0;
+                    }).map((item) => {
+                        const parts = item.split(':');
+                        return parts.map((part) => {
+                            return part.trim();
+                        }).join(':');
+                    }).join('; ');
+            
+                    p.setAttribute('style', this.fixStyle(st));
+                    console.log('완료', p)
+                    return p;
+                };
+
                 p.___BEHAVIORS_ATTACHED = 1;
             }
             
@@ -175,5 +217,16 @@ export default class Dom {
         p.appendChild(d);
         return this.get(d);
     }
+
+    /**
+     * @method  fixStyle()
+     * @param { string }
+     * @returns { Object }
+     * @description 
+     */
+    fixStyle = (s) => {
+        console.log('fixstyle',s)
+        return s.replace(/;+/gi, ';').replace(/:/gi, ': ') + ';';
+    };
 
 }

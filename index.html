@@ -21,14 +21,20 @@
         $('.title').innerHTML = "webpack is easy!";
         var spanEl = createEl('span')
         spanEl.innerHTML = 'short written';
-        Object.assign(spanEl.style, {
+        // Object.assign(spanEl.style, {
+        //     display: 'block',
+        //     color: 'red',
+        //     fontSize: '17px'
+        // })
+        spanEl.setStyle({
             display: 'block',
             color: 'red',
-            fontSize: '17px'
+            fontSize: '17px',
+            '-webkit-transform': 'rotate(348deg)'
         })
         append( spanEl, $('.title') )
 
-        
+
         // cous
         click($('.list li'), function(){
             this.addClass('acitve');
@@ -39,6 +45,8 @@
                 this.classList.add('_active')
             })
         })
+
+        
 
     </script>
 </body>
