@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="title"></h1>
+    <ul class="list">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list2</li>
+    </ul>
+
+    <script src="./dist/bundle.js"></script>
+    <script>
+        console.log('html start')
+        var {$, createEl, append} = DOM.create();
+        var {click} = EVENT.create();
+
+        $('.title').innerHTML = "webpack is easy!";
+        var spanEl = createEl('span')
+        spanEl.innerHTML = 'short written';
+        Object.assign(spanEl.style, {
+            display: 'block',
+            color: 'red',
+            fontSize: '17px'
+        })
+        append( spanEl, $('.title') )
+
+        
+        // cous
+        click($('.list li'), function(){
+            this.addClass('acitve');
+        })
+        // javascript
+        document.querySelectorAll('.list li').forEach(v => {
+            v.addEventListener('click', function(e) {
+                this.classList.add('_active')
+            })
+        })
+
+    </script>
+</body>
+</html>
